@@ -10,7 +10,7 @@ def get_bot_response(system_message: str, user_query: str, model: str, googleSer
     query_vector = vector.embeddings[0].values
 
     # Step 2: Query Pinecone to retrieve relevant chunks
-    context_chunks = pineConeService.knn_query(query_vector, top_k=5)
+    context_chunks = pineConeService.knn_query(query_vector, top_k=3)
     text = ""
     for match in context_chunks.matches:
         text += match.metadata['text'] + "\n\n"

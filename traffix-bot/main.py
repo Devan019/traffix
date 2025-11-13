@@ -7,7 +7,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],      # FIX: allow OPTIONS, GET, POST etc.
+    allow_headers=["*"],      # allow all headers
+)
 
 pineconeService = PineconeService()
 googleService = GoogleService()
