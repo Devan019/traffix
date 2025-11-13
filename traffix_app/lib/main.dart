@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Message {
   final String text;
@@ -15,9 +14,6 @@ class Message {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await dotenv.load(fileName: ".env");
-
   runApp(TraffixChatApp());
 }
 class TraffixChatApp extends StatelessWidget {
@@ -46,21 +42,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // ----------- API CALL TO FASTAPI BACKEND -------------
   Future<String> sendQueryToBot(String query) async {
-    final url = Uri.parse("http://localhost:8000/traffic-query");
+ 
+  final url = Uri.parse("https://traffix-production.up.railway.app/traffic-query");
 
-    final response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"query": query}),
-    );
+  final response = await http.post(
+    url,
+    headers: {"Content-Type": "application/json"},
+    body: jsonEncode({"query": query}),
+  );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data["response"];
-    } else {
-      return "Server error: Please try again later.";
-    }
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    return data["response"];
+  } else {
+    return "Server error: Please try again later.";
   }
+}
+
 
   // ----------- SEND MESSAGE --------------
   void _sendMessage() async {
