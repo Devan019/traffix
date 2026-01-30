@@ -10,8 +10,7 @@ dependencies = [
    "google-genai>=1.50.0",
    "groq>=0.34.0",
    "mangum>=0.20.0",
-   "pinecone-client>=3.0.0",
+   "pinecone>=7.3.0",
    "pymupdf>=1.26.6",
    "uvicorn>=0.38.0",
 ]
-

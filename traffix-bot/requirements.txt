@@ -1,0 +1,15 @@
+fastapi>=0.121.1
+uvicorn>=0.38.0
+mangum>=0.20.0
+
+# AI + APIs
+google-genai>=1.50.0
+groq>=0.34.0
+
+pinecone>=7.3.0
+
+# PDF
+pymupdf>=1.26.6
+
+# Env
+python-dotenv>=1.0.0
