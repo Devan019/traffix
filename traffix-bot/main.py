@@ -5,18 +5,17 @@ from helpers.vectors import create_vectors
 from helpers.bot import get_bot_response
 from fastapi import FastAPI
 from pydantic import BaseModel
-import uvicorn
-
 from fastapi.middleware.cors import CORSMiddleware
-
+from mangum import Mangum  
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],      # allow all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],      # FIX: allow OPTIONS, GET, POST etc.
-    allow_headers=["*"],      # allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 pineconeService = PineconeService()
@@ -50,17 +49,4 @@ def traffic_query_endpoint(query: TraffixModel):
 
     return {"response": response}
 
-if __name__ == "__main__":
-    import os
-
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",   
-        port=port,
-        reload=False      
-    )
-
-
-
-    
+handler = Mangum(app)
